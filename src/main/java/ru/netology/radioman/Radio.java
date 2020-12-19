@@ -1,7 +1,11 @@
 package ru.netology.radioman;
 
 public class Radio {
+    private int minStation = 0;
+    private int maxStation = 9;
     private int currentStation;
+    private int minVolume = 0;
+    private int maxVolume = 10;
     private int currentVolume;
 
     public int getCurrentStation() {
@@ -13,17 +17,19 @@ public class Radio {
     }
 
     public void setNextStation() {
-        currentStation += 1;
-        if (currentStation == 10) {
+        if (currentStation == maxStation) {
             currentStation = 0;
+            return;
         }
+        currentStation += 1;
     }
 
     public void setPrevStation() {
-        currentStation -= 1;
-        if (currentStation == -1) {
+        if (currentStation == minStation) {
             currentStation = 9;
+            return;
         }
+        currentStation -= 1;
     }
 
     public void setCurrentStation(int currentStation) {
@@ -31,14 +37,14 @@ public class Radio {
     }
 
     public void volumeUp() {
-        if (currentVolume == 10) {
+        if (currentVolume == maxVolume) {
             return;
         }
         currentVolume += 1;
     }
 
     public void volumeDown() {
-        if (currentVolume == 0) {
+        if (currentVolume == minVolume) {
             return;
         }
         currentVolume -= 1;
