@@ -2,61 +2,63 @@ package ru.netology.radioman;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    Random random = new Random();
+    Radio radio = new Radio(random.nextInt(3) + 8);
+
+    @Test
+    void shouldRadioDefault() {
+        Radio radio = new Radio();
+        assertEquals(0, radio.getCurrentStation());
+        assertEquals(9, radio.getMaxStation());
+    }
 
     @Test
     void shouldPrevStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(9);
+        radio.setMaxStation();
         radio.setPrevStation();
-        assertEquals(8, radio.getCurrentStation());
+        assertEquals(radio.getMaxStation() - 1, radio.getCurrentStation());
     }
 
     @Test
     void shouldNextStation() {
-        Radio radio = new Radio();
         radio.setNextStation();
         assertEquals(1, radio.getCurrentStation());
     }
 
     @Test
     void shouldOverNextStation() {
-        Radio radio = new Radio();
-        radio.setCurrentStation(9);
+        radio.setMaxStation();
         radio.setNextStation();
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
     void shouldUnderPrevStation() {
-        Radio radio = new Radio();
         radio.setCurrentStation(0);
         radio.setPrevStation();
-        assertEquals(9, radio.getCurrentStation());
+        assertEquals(radio.getMaxStation(), radio.getCurrentStation());
     }
 
     @Test
     void shouldVolumeUp() {
-        Radio radio = new Radio();
         radio.volumeUp();
         assertEquals(1, radio.getCurrentVolume());
     }
 
     @Test
     void shouldStayVolumeUp() {
-        Radio radio = new Radio();
-        for (int i = 0; i < 10; i++) {
-            radio.volumeUp();
-        }
+        radio.setVolume(100);
         radio.volumeUp();
-        assertEquals(10, radio.getCurrentVolume());
+        assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
     void shouldVolumeDown() {
-        Radio radio = new Radio();
         radio.volumeUp();
         radio.volumeDown();
         assertEquals(0, radio.getCurrentVolume());
@@ -64,7 +66,6 @@ class RadioTest {
 
     @Test
     void shouldStayVolumeDown() {
-        Radio radio = new Radio();
         radio.volumeDown();
         assertEquals(0, radio.getCurrentVolume());
     }
